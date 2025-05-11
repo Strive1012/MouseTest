@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鼠标测试</title>
+    <style>
+        #box_01{
+            width: 100%;
+            height: 400px;
+            border: 2px solid black;
+            text-align: center;
+            line-height: 350px;
+            font-size: 20px;
+            background-color: rgb(241, 79, 79);
+        }
+        #count_box{
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="box_01">
+        将鼠标指针放到此区域内
+    </div>
+    <div id="count_box">
+        总点击次数：<span id="countClick">0</span>
+        <br>
+        左键次数：<span id="countLeft">0</span>
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+        中键次数：<span id="countCenter">0</span>
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+        右键次数：<span id="countRight">0</span>
+        <br>
+        前侧键：<span id="countQ">0</span>
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+        后侧键：<span id="countH">0</span>
+        <br>
+        上滚轮次数：<span id="countWheelUp">0</span>
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+        下滚轮次数：<span id="countWheelDown">0</span>
+    </div>
+    <script>
+        // 获取元素
+        var box_01 = document.getElementById("box_01");
+        var count =document.getElementById("countClick");
+        var ClickCount = 0;
+        var LeftCont = 0;
+        var RightCont = 0;
+        var CenterCont = 0;
+        var WheelUpCont = 0;
+        var WheelDownCont = 0;
+        var QCont = 0;
+        var HCont = 0;
+        
+        box_01.addEventListener("mouseenter",function(){
+            box_01.innerText = null
+        })
+        box_01.addEventListener("mouseleave",function(){
+            box_01.innerText = "将指针放到此区域内"
+        })
+        // 禁用选中
+        box_01.addEventListener("selectstart",function(e){
+            e.preventDefault();
+        });
+        // 禁用右键菜单
+        box_01.addEventListener("contextmenu",function(e){
+            e.preventDefault();
+        });
+        // 鼠标进入变色
+        box_01.addEventListener("mouseenter",function(){
+            box_01.style.backgroundColor = "rgb(130, 231, 152)";
+        });
+        // 鼠标离开变色
+        box_01.addEventListener("mouseleave",function(){
+            box_01.style.backgroundColor = "rgb(241, 79, 79)";
+        });
+        // 鼠标按下,释放
+        box_01.addEventListener("mousedown",function(){
+            console.log("按下")
+            ClickCount++
+        });
+        box_01.addEventListener("mouseup",function(){
+            console.log("释放")
+            ClickCount++
+            if(ClickCount%2==0){
+            count.innerText = ClickCount/2
+            }
+        });
+        // 左,中,右按键
+        box_01.addEventListener("mousedown",function(e){
+            if(e.button==0){
+            LeftCont++
+            // alert("左键")
+            document.getElementById("countLeft").innerText = LeftCont
+            }
+        })
+        box_01.addEventListener("mousedown",function(e){
+            if(e.button==1){
+            CenterCont++
+            document.getElementById("countCenter").innerText = CenterCont
+            }
+        })
+        box_01.addEventListener("mousedown",function(e){
+            if(e.button==2){
+            RightCont++
+            // alert("右键")
+            document.getElementById("countRight").innerText = RightCont
+            }
+        })
+        // 侧键
+        box_01.addEventListener("mousedown",function(e){
+            if(e.button==4){
+            QCont++
+            // alert("后侧键")
+            document.getElementById("countQ").innerText = QCont
+            }
+        })
+        box_01.addEventListener("mousedown",function(e){
+            if(e.button==3){
+            HCont++
+            // alert("后侧键")
+            document.getElementById("countH").innerText = HCont
+            }
+        })
+        // 滚轮
+        box_01.addEventListener("wheel",function(e){
+            if(e.deltaY<0){
+                WheelUpCont++
+                console.log("滚轮向上")
+                document.getElementById("countWheelUp").innerText = WheelUpCont
+            }else if(e.deltaY>0){
+                WheelDownCont++
+                console.log("滚轮向下")
+                document.getElementById("countWheelDown").innerText = WheelDownCont
+            }
+        })
+    </script>
+</body>
+</html>
